@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
 
-
 *{
   margin:0;
   padding:0;
@@ -182,7 +181,7 @@ section .title::after{
 
 .home{
   display: flex;
-  background: url() no-repeat center;
+  background: url("uploads/home/{{content.image}}") no-repeat center;
   height: 100vh;
   color: crimson;
   min-height: 500px;
@@ -231,6 +230,11 @@ section .title::after{
   border-radius: 6px;
   border: 2px solid crimson;
   transition: all 0.3s ease;
+}
+.edit-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .home .home-content a:hover{

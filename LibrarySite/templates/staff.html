@@ -26,90 +26,54 @@
 
 
 <body>
-    <div class="scroll-up-btn">
-        <i class="fas fa-angle-up"></i>
-    </div>
-    <nav class="navbar">
-        <div class="max-width">
-            <div class="logo">
-                <a href="/">
-                    <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO"></img>
-                    DAV Public School, Khadia
-                </a>
+
+
+    <nav class="navbar fixed-top navbar-expand-lg  navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#home">
+                <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO"
+                    class="d-inline-block align-top">
+
+            </a>
+            <a class="navbar-brand" href="#home">DAV Public School, Khadia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#about_lib">Librarian</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#books">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Welcome, {{request.user}}</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </div>
             </div>
 
 
-            <ul class="menu">
-                <li><a href="#home" class="menu-btn">HOME</a></li>
-                <li><a href="#about" class="menu-btn">ABOUT</a></li>
-                <li><a href="#about_lib" class="menu-btn">LIBRARIAN</a></li>
-                <li><a href="#books" class="menu-btn">BOOKS</a></li>
-                <!-- <li><a href="#de" class="menu-btn"></a></li> -->
-                <li><a href="#contact" class="menu-btn">CONTACT</a></li>
-                <li><!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success mx-1" data-bs-toggle="modal"
-                        data-bs-target="#sign-in-Modal">
-                        Sign-In
-                    </button>
-                </li>
-            </ul>
 
 
-            <div class="menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
+
+
         </div>
     </nav>
-
-
-    <!-- Sign-In Modal  -->
-    <form method="post" action="/signin">{% csrf_token %}
-        <div class="modal fade" id="sign-in-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Sign In Here</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="row mb-3">
-                            <label for="loginusername" class="col-sm-2 col-form-label">Username</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="loginusername" name="loginusername"
-                                    placeholder="Enter your username" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="loginpassword" class="col-sm-2 col-form-label">Password</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="loginpassword" name="loginpassword"
-                                    required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-sm-10 offset-sm-2">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1" required>
-                                    <label class="form-check-label" for="gridCheck1">
-                                        Keep me Sign In
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Sign In</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </form>
 
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -117,26 +81,73 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endfor %}
+    {% for content in homecontent %}
+    
+    <section class="home" id="home" >
+        <div class="max-width ">
 
-
-    <section class="home" id="home">
-        <div class="max-width">
             <div class="home-content">
-                <div class="text-1">Hello Everyone, Welcome to the</div>
-                <div class="text-2">DAVPS Khadia Library Website</div>
+                <p>{{content.image}}</p>
+                <div class="text-1">{{content.line_1}}</div>
+                <div class="text-2">{{content.line_2}}</div>
                 <!-- <div class="text-3">And I'm a <span class="typing"></span></div> -->
-                <a href="http://davpskhadia.org/" target="_blank">DAVPS Khadia Official Page</a>
+                <a href="http://davpskhadia.org/" target="_blank">{{ content.line_3 }}</a>
+            </div>
+
+        </div>
+        <button class="edit-button btn btn-outline-primary" data-bs-toggle="modal"
+            data-bs-target="#edit-home-Modal">Edit</button>
+    </section>
+    {% endfor %}
+
+    <!--Edit home Modal  -->
+    <div class="modal fade" id="edit-home-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Home Here</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="staff/edit_home" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="row mb-3">
+                            <label for="homebgimage" class="col-sm-2 col-form-label">Image</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="homebgimage" name="image"
+                                    placeholder="Choose Path" value="{{ homecontent.image }}">
+                                <label for="line1" class="col-sm-2 col-form-label">Line 1:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="home-content-line1" name="line1"
+                                        placeholder="" value="{{homecontent.line_1}}">
+                                    <label for="homebgimage" class="col-sm-2 col-form-label">Line 2:</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" id="home-content-line2" name="line2"
+                                            value="{{homecontent.line_2}}">
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+
 
 
     <section class="about" id="about">
         <div class="max-width">
             <h2 class="title">ABOUT</h2>
-            <div class="about-content">
+            <div class="about-content row">
                 <!-- Carousel -->
-                <div id="demo" class="carousel " data-bs-ride="carousel">
+                <div id="demo" class="carousel col-sm-5 " data-bs-ride="carousel">
 
                     <!-- Indicators/dots -->
                     <!-- <div class="carousel-indicators">
@@ -174,11 +185,11 @@
                     </button>
                 </div>
 
-                <div class="column right">
-                    <div class="text">
-                        <p>DAV Public School, Khadia was established in 1989 and since then it is educating students.
-                        </p>
-                    </div>
+                <div class=" col-sm-7 mt-0">
+
+                    DAV Public School, Khadia was established in 1989 and since then it is educating students.
+
+
                 </div>
             </div>
         </div>
@@ -193,20 +204,29 @@
                 </div>
                 <div class='column right'>
                     <div class='text'></div>
-                    <p>Education for me is “educare” which means to nourish children in such a way that their best can
-                        bring out and they develop into confident and responsible Human Being for the Nature and Society
+                    <p>Education for me is “educare” which means to nourish children in such a way that their
+                        best can
+                        bring out and they develop into confident and responsible Human Being for the Nature and
+                        Society
                         as well. <br>
-                        The real goal of education is full flowering of young minds by making them experience the
+                        The real goal of education is full flowering of young minds by making them experience
+                        the
                         significance of love, fellowship, freedom, justice and harmony. <br>
-                        ​Every child is unique, with unimaginable possibilities we have to make an effort to go beyond
-                        schooling to learning and take on the challenge of preparing every child to play different roles
+                        ​Every child is unique, with unimaginable possibilities we have to make an effort to go
+                        beyond
+                        schooling to learning and take on the challenge of preparing every child to play
+                        different roles
                         in his/her life. <br>
-                        I believe in Interactive teaching and in those methods and measures which can motivate children
-                        to adopt different subject aspects with their day to-day life in order to inculcate Application
-                        and Advanced attitude among the. Our real success and happiness is to make good human beings
+                        I believe in Interactive teaching and in those methods and measures which can motivate
+                        children
+                        to adopt different subject aspects with their day to-day life in order to inculcate
+                        Application
+                        and Advanced attitude among the. Our real success and happiness is to make good human
+                        beings
                         with love and care so that their learning becomes a “lifetime joy” for them.<br><br>
 
-                        Dreams followed with total commitment and passion will lead to milestone in days and years to
+                        Dreams followed with total commitment and passion will lead to milestone in days and
+                        years to
                         come.
                     </p>
                     <span class="patron">Best Wishes,<br>Mrs. Sandhya Pandey</span>
@@ -219,7 +239,8 @@
                         </div>
                         <div class='column right'>
                             <div class='text'></div>
-                            <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia Librarian</p>
+                            <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia
+                                Librarian</p>
                         </div>
                     </div>
                 </div>
@@ -252,7 +273,8 @@
             <div class='contact-content'>
                 <div class='column left'>
                     <div class='text'>Get in Touch</div>
-                    <p>If you want to connect with us or have any suggestions<br> feel free to contact. Or else you can
+                    <p>If you want to connect with us or have any suggestions<br> feel free to contact. Or else
+                        you can
                         drop us a mail!</p>
                     <div class='icons'>
                         <div class='row'>
@@ -266,7 +288,8 @@
                             <i class='fas fa-map-marker-alt'></i>
                             <div class='info'>
                                 <div class='head'>Address</div>
-                                <div class='sub-title'>DAV Public School, Khadia Project NCL, Shaktinagar, Sonbhadra,
+                                <div class='sub-title'>DAV Public School, Khadia Project NCL, Shaktinagar,
+                                    Sonbhadra,
                                     Uttar Pradesh - 222123</div>
                             </div>
                         </div>
