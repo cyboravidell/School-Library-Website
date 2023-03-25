@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-    <link rel="icon" href="LOGO.png" type="image/x-icon">
+    <link rel="icon" href="{% static 'Image/LOGO.png' %}" type="image/x-icon">
 
 </head>
 
@@ -44,7 +44,6 @@
                 <li><a href="#about" class="menu-btn">ABOUT</a></li>
                 <li><a href="#about_lib" class="menu-btn">LIBRARIAN</a></li>
                 <li><a href="#books" class="menu-btn">BOOKS</a></li>
-                <!-- <li><a href="#de" class="menu-btn"></a></li> -->
                 <li><a href="#contact" class="menu-btn">CONTACT</a></li>
             </ul>
 
@@ -75,13 +74,7 @@
                 <!-- Carousel -->
                 <div id="demo" class="carousel " data-bs-ride="carousel">
 
-                    <!-- Indicators/dots -->
-                    <!-- <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
-                    </div> -->
+                    
 
                     <!-- The slideshow/carousel -->
                     <div class="carousel-inner">
@@ -149,7 +142,7 @@
                     <span class="patron">Best Wishes,<br>Mrs. Sandhya Pandey</span>
                 </div>
                 <div class='max-width'>
-                    <h2 class='title'>About The Librarian</h2>
+                    <h2 class='title lib-title'>About The Librarian</h2>
                     <div class='about-content1'>
                         <div class='column left'>
                             <img src="{% static 'Image/Img2.jpg' %}" alt='' />
@@ -157,6 +150,7 @@
                         <div class='column right'>
                             <div class='text'></div>
                             <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia Librarian</p>
+                            <span class="patron">Best Wishes,<br>Mr. Kuldeep Sahai</span>
                         </div>
                     </div>
                 </div>
@@ -170,6 +164,17 @@
             <div></div>
             <div class="column left">
                 <marquee behavior="scroll" direction="left">
+                    <img src="{% static 'Image/book1.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book2.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book3.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book4.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book5.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book6.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book7.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                </marquee>
+            </div>
+            <div class="column left top-picks">
+                <marquee behavior="scroll" direction="right">
                     <img src="{% static 'Image/book1.jpg' %}" alt="Book1" style="margin-right: 60px;">
                     <img src="{% static 'Image/book2.jpg' %}" alt="Book1" style="margin-right: 60px;">
                     <img src="{% static 'Image/book3.jpg' %}" alt="Book1" style="margin-right: 60px;">
