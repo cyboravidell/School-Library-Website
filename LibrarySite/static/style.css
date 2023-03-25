@@ -181,7 +181,11 @@ section .title::after{
 
 .home{
   display: flex;
+<<<<<<< HEAD
   background: url("uploads/home/{{content.image}}") no-repeat center;
+=======
+  background: url("Image/bg library.jpg") no-repeat center;
+>>>>>>> 2c173bd7b13001bfcea8b50ce9484d3681e27e9b
   height: 100vh;
   color: crimson;
   min-height: 500px;
@@ -215,7 +219,7 @@ section .title::after{
 }
 
 .home .home-content .text-3 span{
-  color: crimson;
+  
   font-weight: 500;
 }
 
@@ -241,10 +245,22 @@ section .title::after{
   color:crimson;
   background: none;
 }
-
-.about .title::after{
-  content:'The School Library';
+.about {
+  color: #fff;
+  background: #111;
 }
+
+.about .title::before
+{
+  background: #fff;
+}
+
+.about .title::after
+{
+  background: #111;
+  content:'The School Library'; 
+}
+
 
 .about .about-content .left{
   width: 45%;
@@ -300,6 +316,8 @@ section .title::after{
 } */
 /* corousel */
 
+
+
 .about_lib .about-content1 .left{
   width: 45%;
 }
@@ -315,12 +333,12 @@ section .title::after{
   width: 55%;
 }
 
-.about_lib .about-content1 .right .text{
-  font-size: 25px;
-  font-weight: 600;
+.about_lib .max-width .about-content .right .text{
+  font-size: 16px;
+  font-weight: normal;
   margin-bottom: 10px;
+  
 }
-
 /* .about_lib .about-content1 .right .text span{
   color: crimson;
 } */
@@ -355,21 +373,27 @@ section .title::after{
   background: none;
 } */
 
-.books, .details{
+.books {
   color: #fff;
   background: #111;
 }
 
-.books .title::before,
-.details .title::before{
+.books .title::before
+{
   background: #fff;
 }
 
-.books .title::after,
-.details .title::after{
+.books .title::after
+{
   background: #111;
   content:"New Arrival"; 
 }
+
+.top-picks {
+  margin-top: 50px;
+  
+}
+
 
 .books .slider {
   position: relative;
