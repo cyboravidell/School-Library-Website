@@ -181,11 +181,8 @@ section .title::after{
 
 .home{
   display: flex;
-<<<<<<< HEAD
-  background: url("uploads/home/{{content.image}}") no-repeat center;
-=======
-  background: url("Image/bg library.jpg") no-repeat center;
->>>>>>> 2c173bd7b13001bfcea8b50ce9484d3681e27e9b
+  position: relative;
+  /* background: url("{% static '/uploads/home/{{content.image}}' %}") no-repeat center; */
   height: 100vh;
   color: crimson;
   min-height: 500px;

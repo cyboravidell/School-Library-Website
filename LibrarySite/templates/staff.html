@@ -82,12 +82,11 @@
     </div>
     {% endfor %}
     {% for content in homecontent %}
-    
-    <section class="home" id="home" >
+
+    <section class="home" id="home" style="background-image: url({% static 'uploads/home/'|add:content.image %});">
         <div class="max-width ">
 
             <div class="home-content">
-                <p>{{content.image}}</p>
                 <div class="text-1">{{content.line_1}}</div>
                 <div class="text-2">{{content.line_2}}</div>
                 <!-- <div class="text-3">And I'm a <span class="typing"></span></div> -->
@@ -95,7 +94,7 @@
             </div>
 
         </div>
-        <button class="edit-button btn btn-outline-primary" data-bs-toggle="modal"
+        <button class="home-content edit-button btn btn-outline-primary" data-bs-toggle="modal"
             data-bs-target="#edit-home-Modal">Edit</button>
     </section>
     {% endfor %}
@@ -115,25 +114,38 @@
                             <div class="col-sm-10">
                                 <input type="file" class="form-control" id="homebgimage" name="image"
                                     placeholder="Choose Path" value="{{ homecontent.image }}">
-                                <label for="line1" class="col-sm-2 col-form-label">Line 1:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="home-content-line1" name="line1"
-                                        placeholder="" value="{{homecontent.line_1}}">
-                                    <label for="homebgimage" class="col-sm-2 col-form-label">Line 2:</label>
-                                    <div class="col-sm-10">
-                                        <input type="file" class="form-control" id="home-content-line2" name="line2"
-                                            value="{{homecontent.line_2}}">
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success">Save Changes</button>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="line1" class="col-sm-2 col-form-label">Line 1:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="home-content-line1" name="line1"
+                                    placeholder="" value="{{homecontent.line_1}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="line2" class="col-sm-2 col-form-label">Line 2:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="home-content-line2" name="line2"
+                                    value="{{homecontent.line_2}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="line3" class="col-sm-2 col-form-label">Line 3:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="home-content-line3" name="line3"
+                                    value="{{homecontent.line_3}}">
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -145,55 +157,74 @@
     <section class="about" id="about">
         <div class="max-width">
             <h2 class="title">ABOUT</h2>
-            <div class="about-content row">
-                <!-- Carousel -->
-                <div id="demo" class="carousel col-sm-5 " data-bs-ride="carousel">
-
-                    <!-- Indicators/dots -->
-                    <!-- <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
-                    </div> -->
-
-                    <!-- The slideshow/carousel -->
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{% static 'Image/Image/scpic.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'Image/Image/scpic2.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'Image/Image/scpic3.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'Image/Image/scpic4.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+                    {% for content in aboutCorousel  %}
+                    <div class="col">
+                        <div class="card text-dark">
+                            <img src="{% static 'uploads/about/' %}{{ content.0 }}" class="card-img-top" alt="c image">
+                            <h5 class="card-title">Image Position : {{content.1}} </h5>   
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#about-corousel-Modal{{content.1}}">Edit</a>
+                                <form action="staff/deleteAboutCorousel" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="lastimage" value="{{ content.0 }}">
+                                    <input type="hidden" name="corousel_id" value="{{ content.1 }}">
+                                    <button type="submit" class="btn btn-danger float-end">Delete</button>
+                                  </form>
+                                  
+                              </div>
                         </div>
                     </div>
-                    <!-- Left and right controls/icons -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
-                </div>
-
-                <div class=" col-sm-7 mt-0">
-
-                    DAV Public School, Khadia was established in 1989 and since then it is educating students.
-
-
+                    <div class="modal fade" id="about-corousel-Modal{{content.1}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Edit About Corousel Here</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="staff/editAboutCourosel" enctype="multipart/form-data">{% csrf_token %}
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-image" class="mr-2 col-form-label text-dark">Image</label>
+                                            <input type="hidden" name="lastimage" value="{{ content.0 }}">
+                                            
+                                                <input type="file" class="form-control mr-2" id="about-corousel-image" name="image" value="{{content.0}}"
+                                                    placeholder="Choose Path"  required>
+                                           
+                                        </div>
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-last-position" class="mr-2 col-form-label text-dark">Last Position:</label>
+                                            <input type="text" class="form-control mr-2" id="about-corousel-last-position" name="lpos" placeholder="" value="{{content.1}}" >
+                                          </div>
+                                          
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-new-position" class="mr-2 col-form-label text-dark">New Position:</label>
+                                          
+                                                <input type="text" class="form-control mr-2" id="about-corousel-new-position" name="npos" placeholder="" value="" required>
+                                          
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save Changes</button>
+                                        </div>
+                
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+        
+                    
                 </div>
             </div>
         </div>
     </section>
+
+    <!--Edit About Corousel Model Modal  -->
 
     <section class='about_lib' id='about_lib'>
         <div class='max-width'>
@@ -232,7 +263,7 @@
                     <span class="patron">Best Wishes,<br>Mrs. Sandhya Pandey</span>
                 </div>
                 <div class='max-width'>
-                    <h2 class='title'>About The Librarian</h2>
+                    <h2 class='title lib-title'>About The Librarian</h2>
                     <div class='about-content1'>
                         <div class='column left'>
                             <img src="{% static 'Image/Img2.jpg' %}" alt='' />
@@ -241,6 +272,7 @@
                             <div class='text'></div>
                             <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia
                                 Librarian</p>
+                            <span class="patron">Best Wishes,<br>Mr. Kuldeep Sahai</span>
                         </div>
                     </div>
                 </div>

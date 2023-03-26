@@ -1,6 +1,5 @@
 from django.db import models
 from pickle import TRUE
-from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
@@ -12,9 +11,9 @@ class Home(models.Model):
     line_2 = models.TextField()
     line_3 = models.TextField()
     
-
-
     def _str_(self) -> str:
-        return "Posted by "+ self.image + " - " + self.subject
+        return "Posted by "+ self.image + " - " 
 
-
+class AboutCorousel(models.Model):
+    image = models.CharField(max_length=100)
+    position = models.IntegerField()

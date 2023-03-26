@@ -29,33 +29,40 @@
     <div class="scroll-up-btn">
         <i class="fas fa-angle-up"></i>
     </div>
-    <nav class="navbar">
-        <div class="max-width">
-            <div class="logo">
-                <a href="/">
-                    <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO"></img>
-                    DAV Public School, Khadia
-                </a>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                    <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO" class="d-inline-block align-top"></img>
+                    
+            </a>
+            <a class="navbar-brand" href="#home">DAV Public School, Khadia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"  href="#about">ABOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"  href="#about_lib">LIBRARIAN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"  href="#contact">CONTACT</a>
+                    </li>
+                    <li><!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success mx-1" data-bs-toggle="modal"
+                            data-bs-target="#sign-in-Modal">
+                            Sign-In
+                        </button>
+                    </li>
+                </ul>
+
             </div>
 
-
-            <ul class="menu">
-                <li><a href="#home" class="menu-btn">HOME</a></li>
-                <li><a href="#about" class="menu-btn">ABOUT</a></li>
-                <li><a href="#about_lib" class="menu-btn">LIBRARIAN</a></li>
-                <li><a href="#books" class="menu-btn">BOOKS</a></li>
-                <li><a href="#contact" class="menu-btn">CONTACT</a></li>
-                <li><!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success mx-1" data-bs-toggle="modal"
-                        data-bs-target="#sign-in-Modal">
-                        Sign-In
-                    </button>
-                </li>
-            </ul>
-
-
-            <div class="menu-btn">
-                <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
