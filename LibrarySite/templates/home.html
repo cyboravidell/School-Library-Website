@@ -29,30 +29,100 @@
     <div class="scroll-up-btn">
         <i class="fas fa-angle-up"></i>
     </div>
-    <nav class="navbar">
-        <div class="max-width">
-            <div class="logo">
-                <a href="/">
-                    <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO"></img>
-                    DAV Public School, Khadia
-                </a>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                    <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO" class="d-inline-block align-top"></img>
+                    
+            </a>
+            <a class="navbar-brand" href="#home">DAV Public School, Khadia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"  href="#about">ABOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"  href="#about_lib">LIBRARIAN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"  href="#contact">CONTACT</a>
+                    </li>
+                    <li><!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success mx-1" data-bs-toggle="modal"
+                            data-bs-target="#sign-in-Modal">
+                            Sign-In
+                        </button>
+                    </li>
+                </ul>
+
             </div>
 
-
-            <ul class="menu">
-                <li><a href="#home" class="menu-btn">HOME</a></li>
-                <li><a href="#about" class="menu-btn">ABOUT</a></li>
-                <li><a href="#about_lib" class="menu-btn">LIBRARIAN</a></li>
-                <li><a href="#books" class="menu-btn">BOOKS</a></li>
-                <li><a href="#contact" class="menu-btn">CONTACT</a></li>
-            </ul>
-
-
-            <div class="menu-btn">
-                <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
+
+
+    <!-- Sign-In Modal  -->
+    <form method="post" action="/signin">{% csrf_token %}
+        <div class="modal fade" id="sign-in-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Sign In Here</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row mb-3">
+                            <label for="loginusername" class="col-sm-2 col-form-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="loginusername" name="loginusername"
+                                    placeholder="Enter your username" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="loginpassword" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="loginpassword" name="loginpassword"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-10 offset-sm-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Keep me Sign In
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Sign In</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Message : </strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
 
 
     <section class="home" id="home">
