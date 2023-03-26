@@ -1,0 +1,379 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAV Library</title>
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <link rel="icon" href="LOGO.png" type="image/x-icon">
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar fixed-top navbar-expand-lg  navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#home">
+                <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO"
+                    class="d-inline-block align-top">
+
+            </a>
+            <a class="navbar-brand" href="#home">DAV Public School, Khadia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#about_lib">Librarian</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#books">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Welcome, {{request.user}}</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+    </nav>
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Message : </strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% for content in homecontent %}
+
+    <section class="home" id="home" style="background-image: url({% static 'uploads/home/'|add:content.image %});">
+        <div class="max-width ">
+
+            <div class="home-content">
+                <div class="text-1">{{content.line_1}}</div>
+                <div class="text-2">{{content.line_2}}</div>
+                <!-- <div class="text-3">And I'm a <span class="typing"></span></div> -->
+                <a href="http://davpskhadia.org/" target="_blank">{{ content.line_3 }}</a>
+            </div>
+
+        </div>
+        <button class="home-content edit-button btn btn-outline-primary" data-bs-toggle="modal"
+            data-bs-target="#edit-home-Modal">Edit</button>
+    </section>
+    {% endfor %}
+
+    <!--Edit home Modal  -->
+    <div class="modal fade" id="edit-home-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Home Here</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="staff/edit_home" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="row mb-3">
+                            <label for="homebgimage" class="col-sm-2 col-form-label">Image</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="homebgimage" name="image"
+                                    placeholder="Choose Path" value="{{ homecontent.image }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="line1" class="col-sm-2 col-form-label">Line 1:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="home-content-line1" name="line1"
+                                    placeholder="" value="{{homecontent.line_1}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="line2" class="col-sm-2 col-form-label">Line 2:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="home-content-line2" name="line2"
+                                    value="{{homecontent.line_2}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="line3" class="col-sm-2 col-form-label">Line 3:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="home-content-line3" name="line3"
+                                    value="{{homecontent.line_3}}">
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <section class="about" id="about">
+        <div class="max-width">
+            <h2 class="title">ABOUT</h2>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+                    {% for content in aboutCorousel  %}
+                    <div class="col">
+                        <div class="card text-dark">
+                            <img src="{% static 'uploads/about/' %}{{ content.0 }}" class="card-img-top" alt="c image">
+                            <h5 class="card-title">Image Position : {{content.1}} </h5>   
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#about-corousel-Modal{{content.1}}">Edit</a>
+                                <form action="staff/deleteAboutCorousel" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="lastimage" value="{{ content.0 }}">
+                                    <input type="hidden" name="corousel_id" value="{{ content.1 }}">
+                                    <button type="submit" class="btn btn-danger float-end">Delete</button>
+                                  </form>
+                                  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="about-corousel-Modal{{content.1}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Edit About Corousel Here</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="staff/editAboutCourosel" enctype="multipart/form-data">{% csrf_token %}
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-image" class="mr-2 col-form-label text-dark">Image</label>
+                                            <input type="hidden" name="lastimage" value="{{ content.0 }}">
+                                            
+                                                <input type="file" class="form-control mr-2" id="about-corousel-image" name="image" value="{{content.0}}"
+                                                    placeholder="Choose Path"  required>
+                                           
+                                        </div>
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-last-position" class="mr-2 col-form-label text-dark">Last Position:</label>
+                                            <input type="text" class="form-control mr-2" id="about-corousel-last-position" name="lpos" placeholder="" value="{{content.1}}" >
+                                          </div>
+                                          
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-new-position" class="mr-2 col-form-label text-dark">New Position:</label>
+                                          
+                                                <input type="text" class="form-control mr-2" id="about-corousel-new-position" name="npos" placeholder="" value="" required>
+                                          
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save Changes</button>
+                                        </div>
+                
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+        
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Edit About Corousel Model Modal  -->
+
+    <section class='about_lib' id='about_lib'>
+        <div class='max-width'>
+            <h2 class='title'>Our Patron</h2>
+            <div class='about-content1'>
+                <div class='column left'>
+                    <img src="{% static 'Image/Img3.jpg' %}" alt='img' />
+                </div>
+                <div class='column right'>
+                    <div class='text'></div>
+                    <p>Education for me is “educare” which means to nourish children in such a way that their
+                        best can
+                        bring out and they develop into confident and responsible Human Being for the Nature and
+                        Society
+                        as well. <br>
+                        The real goal of education is full flowering of young minds by making them experience
+                        the
+                        significance of love, fellowship, freedom, justice and harmony. <br>
+                        ​Every child is unique, with unimaginable possibilities we have to make an effort to go
+                        beyond
+                        schooling to learning and take on the challenge of preparing every child to play
+                        different roles
+                        in his/her life. <br>
+                        I believe in Interactive teaching and in those methods and measures which can motivate
+                        children
+                        to adopt different subject aspects with their day to-day life in order to inculcate
+                        Application
+                        and Advanced attitude among the. Our real success and happiness is to make good human
+                        beings
+                        with love and care so that their learning becomes a “lifetime joy” for them.<br><br>
+
+                        Dreams followed with total commitment and passion will lead to milestone in days and
+                        years to
+                        come.
+                    </p>
+                    <span class="patron">Best Wishes,<br>Mrs. Sandhya Pandey</span>
+                </div>
+                <div class='max-width'>
+                    <h2 class='title lib-title'>About The Librarian</h2>
+                    <div class='about-content1'>
+                        <div class='column left'>
+                            <img src="{% static 'Image/Img2.jpg' %}" alt='' />
+                        </div>
+                        <div class='column right'>
+                            <div class='text'></div>
+                            <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia
+                                Librarian</p>
+                            <span class="patron">Best Wishes,<br>Mr. Kuldeep Sahai</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+    <section class='books' id='books'>
+        <div class='max-width'>
+            <h2 class='title'>BOOKS</h2>
+            <div></div>
+            <div class="column left">
+                <marquee behavior="scroll" direction="left">
+                    <img src="{% static 'Image/book1.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book2.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book3.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book4.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book5.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book6.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book7.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                </marquee>
+            </div>
+        </div>
+    </section>
+
+
+    <section class='contact' id='contact'>
+        <div class='max-width'>
+            <h2 class='title'>CONTACT US</h2>
+            <div class='contact-content'>
+                <div class='column left'>
+                    <div class='text'>Get in Touch</div>
+                    <p>If you want to connect with us or have any suggestions<br> feel free to contact. Or else
+                        you can
+                        drop us a mail!</p>
+                    <div class='icons'>
+                        <div class='row'>
+                            <i class='fas fa-user'></i>
+                            <div class='info'>
+                                <div class='head'>Name</div>
+                                <div class='sub-title'>Kuldeep Sahai</div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <i class='fas fa-map-marker-alt'></i>
+                            <div class='info'>
+                                <div class='head'>Address</div>
+                                <div class='sub-title'>DAV Public School, Khadia Project NCL, Shaktinagar,
+                                    Sonbhadra,
+                                    Uttar Pradesh - 222123</div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <i class='fas fa-envelope'></i>
+                            <div class='info'>
+                                <div class='head'>Email</div>
+                                <div class='sub-title'>email@gmail.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='column right'>
+                    <div class='text'>Message Us</div>
+                    <form action='/contact' method="POST"> {% csrf_token %}
+                        <div class='fields'>
+                            <div class='field name'>
+                                <input type='text' placeholder='Name' id="name" name="username" required>
+                            </div>
+                            <div class='field email'>
+                                <input type='email' placeholder='Email' id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class='field'>
+                            <input type='text' placeholder='Subject' id="subject" name="subject" required>
+                        </div>
+                        <div class="field textarea">
+                            <textarea cols="30" rows="10" placeholder="Message.." id="" name="message"
+                                required></textarea>
+                        </div>
+                        <div class='button-area'>
+                            <button type='submit'>Send Message</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>Created By <a href="#">Kuldeep Sahai</a> | <span class="far fa-copyright"></span>
+            <script>document.write(new Date().getFullYear())</script> All rights
+            reserved.
+        </span>
+    </footer>
+
+
+    <script src="{% static 'main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
