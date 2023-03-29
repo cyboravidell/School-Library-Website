@@ -1,12 +1,39 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival
 
 
 def home(request):
-    return render(request, "home.html")
+    
+    homecontent = Home.objects.all()
+    aboutCorousel = AboutCorousel.objects.all()
+    aboutText = get_object_or_404(AboutText,Sno=1)
+    aboutPatron = AboutLibrarian.objects.get(Sno = 1)
+    aboutlibrarian = AboutLibrarian.objects.get(Sno = 2)
+    booksNewArrival = BooksNewArrival.objects.all()
+
+
+    abt = list()
+    for i in aboutCorousel:
+        abt.append([i.image,i.position])
+    abt.sort(key=lambda x: x[1])
+
+    bna = list()
+    for i in booksNewArrival:
+        bna.append([i.image,i.position])
+    bna.sort(key=lambda x: x[1])
+    
+    print(list(aboutCorousel))
+    context = {'homecontent' : homecontent,
+               'aboutCorousel':abt,
+               'aboutText': aboutText.text, 
+               'aboutPatron':aboutPatron, 
+               'aboutlibrarian':aboutlibrarian, 
+               'booksNewArrival': bna}
+    
+    return render(request, "home.html", context)
 
 def staffSignin(request):
     if request.method == "POST":

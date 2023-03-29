@@ -1,0 +1,148 @@
+<section class="image-text-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="{% static 'Image/Img3.jpg' %}" class="card-img-top" alt="...">
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class='title'>Our Patron</h2>
+                <p>Education for me is “educare” which means to nourish children in such a way that their best can
+                    bring out and they develop into confident and responsible Human Being for the Nature and Society
+                    as well. <br>
+                    The real goal of education is full flowering of young minds by making them experience the
+                    significance of love, fellowship, freedom, justice and harmony. <br>
+                    ​Every child is unique, with unimaginable possibilities we have to make an effort to go beyond
+                    schooling to learning and take on the challenge of preparing every child to play different roles
+                    in his/her life. <br>
+                    I believe in Interactive teaching and in those methods and measures which can motivate children
+                    to adopt different subject aspects with their day to-day life in order to inculcate Application
+                    and Advanced attitude among the. Our real success and happiness is to make good human beings
+                    with love and care so that their learning becomes a “lifetime joy” for them.<br><br>
+
+                    Dreams followed with total commitment and passion will lead to milestone in days and years to
+                    come.</p>
+                <span class="patron">Best Wishes,<br>Mrs. Sandhya Pandey</span>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class='about_lib' id='about_lib'>
+    <div class='max-width'>
+        <h2 class='title'>Our Patron</h2>
+        <div class='about-content1'>
+            <div class='column left'>
+                <img src="{% static 'Image/Img3.jpg' %}" alt='img' />
+            </div>
+            <div class='column right'>
+                <div class='text'></div>
+                <p>Education for me is “educare” which means to nourish children in such a way that their best can
+                    bring out and they develop into confident and responsible Human Being for the Nature and Society
+                    as well. <br>
+                    The real goal of education is full flowering of young minds by making them experience the
+                    significance of love, fellowship, freedom, justice and harmony. <br>
+                    ​Every child is unique, with unimaginable possibilities we have to make an effort to go beyond
+                    schooling to learning and take on the challenge of preparing every child to play different roles
+                    in his/her life. <br>
+                    I believe in Interactive teaching and in those methods and measures which can motivate children
+                    to adopt different subject aspects with their day to-day life in order to inculcate Application
+                    and Advanced attitude among the. Our real success and happiness is to make good human beings
+                    with love and care so that their learning becomes a “lifetime joy” for them.<br><br>
+
+                    Dreams followed with total commitment and passion will lead to milestone in days and years to
+                    come.
+                </p>
+                <span class="patron">Best Wishes,<br>Mrs. Sandhya Pandey</span>
+            </div>
+            <div class='max-width'>
+                <h2 class='title lib-title'>About The Librarian</h2>
+                <div class='about-content1'>
+                    <div class='column left'>
+                        <img src="{% static 'Image/Img2.jpg' %}" alt='' />
+                    </div>
+                    <div class='column right'>
+                        <div class='text'></div>
+                        <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia Librarian</p>
+                        <span class="patron">Best Wishes,<br>Mr. Kuldeep Sahai</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+<div class="card">
+    <img src="{% static 'Image/Img3.jpg' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Our Patron</h5>
+        <p class="card-text">
+            <!-- Short preview of the blog post -->
+            
+
+                            <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia Librarian.</p>
+                            <span class="patron">Best Wishes,<br>Mr. Kuldeep Sahai</span>
+
+                        </div>
+        </p>
+        
+    </div>
+</div>
+
+<div class="card" style="width: 30rem;">
+    
+    <div class="card-body">
+      <h5 class="card-title">Mr. Kuldeep Sahai</h5>
+      <p class="card-text">Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia Librarian.
+      
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <img src="{% static 'Image/book1.jpg' %}" class="card-img-top" alt="Book1"  style="margin-right: 60px;">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      
+    </div>
+  </div>
+
+  <img src="{% static 'Image/book1.jpg' %}" alt="Book1" style="margin-right: 60px;">
+
+
+  <div class="column left">
+    <marquee behavior="scroll" direction="left">
+        <div style="display: flex; flex-direction: column;">
+            <img src="{% static 'Image/book1.jpg' %}" alt="Book1" style="margin-right: 60px;">
+            <span>Book 1 Title</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <img src="{% static 'Image/book2.jpg' %}" alt="Book2" style="margin-right: 60px;">
+            <span>Book 2 Title</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <img src="{% static 'Image/book3.jpg' %}" alt="Book3" style="margin-right: 60px;">
+            <span>Book 3 Title</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <img src="{% static 'Image/book4.jpg' %}" alt="Book4" style="margin-right: 60px;">
+            <span>Book 4 Title</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <img src="{% static 'Image/book5.jpg' %}" alt="Book5" style="margin-right: 60px;">
+            <span>Book 5 Title</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <img src="{% static 'Image/book6.jpg' %}" alt="Book6" style="margin-right: 60px;">
+            <span>Book 6 Title</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <img src="{% static 'Image/book7.jpg' %}" alt="Book7" style="margin-right: 60px;">
+            <span>Book 7 Title</span>
+        </div>
+    </marquee>
+</div>
