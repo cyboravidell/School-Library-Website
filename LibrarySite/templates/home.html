@@ -25,13 +25,15 @@
 </head>
 
 
-<body>
-    
-    <nav class="navbar fixed-top navbar-expand-lg  navbar-dark bg-dark">
+<body class="xs-12">
+    <div class="scroll-up-btn">
+        <i class="fas fa-angle-up"></i>
+    </div>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#home">
+            <a class="navbar-brand" href="#">
                 <img src="{% static 'Image/LOGO.png' %}" width="75px" height="50px" alt="LOGO"
-                    class="d-inline-block align-top">
+                    class="d-inline-block align-top"></img>
 
             </a>
             <a class="navbar-brand" href="#home">DAV Public School, Khadia</a>
@@ -45,78 +47,126 @@
                         <a class="nav-link active" aria-current="page" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="#about">About</a>
+                        <a class="nav-link active" href="#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="#about_lib">Librarian</a>
+                        <a class="nav-link active" href="#about_lib">Librarian</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="#books">Books</a>
+                        <a class="nav-link active" href="#books">Books</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="#contact">Contact</a>
+                        <a class="nav-link active" href="#contact">Contact</a>
                     </li>
+
                 </ul>
-                
+
             </div>
-
-
-            <ul class="menu">
-                <li><a href="#home" class="menu-btn">HOME</a></li>
-                <li><a href="#about" class="menu-btn">ABOUT</a></li>
-                <li><a href="#about_lib" class="menu-btn">LIBRARIAN</a></li>
-                <li><a href="#books" class="menu-btn">BOOKS</a></li>
-                <li><a href="#contact" class="menu-btn">CONTACT</a></li>
+            <ul class="navbar-nav position-absolute top-0 end-0 my-3 collapse navbar-collapse"
+                id="navbarTogglerDemo02 ">
+                <li>
+                    <button type="button" class="btn btn-success mx-4" data-bs-toggle="modal"
+                        data-bs-target="#sign-in-Modal">
+                        Sign-In
+                    </button>
+                </li>
             </ul>
 
-
-            <div class="menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
+
     </nav>
 
 
-    <section class="home" id="home">
+    <!-- Sign-In Modal  -->
+    <form method="post" action="/signin">{% csrf_token %}
+        <div class="modal fade" id="sign-in-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Sign In Here</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row mb-3">
+                            <label for="loginusername" class="col-sm-2 col-form-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="loginusername" name="loginusername"
+                                    placeholder="Enter your username" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="loginpassword" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="loginpassword" name="loginpassword"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-10 offset-sm-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Keep me Sign In
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Sign In</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Message : </strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+<!-- Home Section starts -->
+    
+    {% for content in homecontent %}
+    <section class="home" id="home" style="background-image: url({% static 'uploads/home/'|add:content.image %});">
         <div class="max-width">
             <div class="home-content">
-                <div class="text-1">Hello Everyone, Welcome to the</div>
-                <div class="text-2">DAVPS Khadia Library Website</div>
+                <div class="text-1">{{content.line_1}}</div>
+                <div class="text-2">{{content.line_2}}</div>
                 <!-- <div class="text-3">And I'm a <span class="typing"></span></div> -->
-                <a href="http://davpskhadia.org/" target="_blank">DAVPS Khadia Official Page</a>
+                <a href="http://davpskhadia.org/" target="_blank">{{content.line_3}}</a>
             </div>
         </div>
     </section>
+    {% endfor %}
 
+    <!-- About Section Starts -->
 
-    <section class="about" id="about">
+    <section class="about xs" id="about">
         <div class="max-width">
             <h2 class="title">ABOUT</h2>
             <div class="about-content">
                 <!-- Carousel -->
                 <div id="demo" class="carousel " data-bs-ride="carousel">
 
-                    
+
 
                     <!-- The slideshow/carousel -->
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{% static 'Image/Image/scpic.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'Image/Image/scpic2.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'Image/Image/scpic3.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'Image/Image/scpic4.jpg' %}" class="d-block w-100" width="500px"
-                                height="500px">
-                        </div>
+                    {% for corousel in aboutCorousel %}
+                    <div class="carousel-item{% if forloop.counter0 == 0 %} active{% endif %} rounded">
+                        <img src="{% static 'uploads/about/' %}{{ corousel.0 }}" class="d-block w-100 rounded"
+                            width="500px" height="500px">
                     </div>
+                    {% endfor %}
+
                     <!-- Left and right controls/icons -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon"></span>
@@ -128,82 +178,104 @@
 
                 <div class="column right">
                     <div class="text">
-                        <p>DAV Public School, Khadia was established in 1989 and since then it is educating students.
-                        </p>
+                        <p>{{aboutText}}</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class='about_lib' id='about_lib'>
-        <div class='max-width'>
-            <h2 class='title'>Our Patron</h2>
-            <div class='about-content1'>
-                <div class='column left'>
-                    <img src="{% static 'Image/Img3.jpg' %}" alt='img' />
-                </div>
-                <div class='column right'>
-                    <div class='text'></div>
-                    <p>Education for me is “educare” which means to nourish children in such a way that their best can
-                        bring out and they develop into confident and responsible Human Being for the Nature and Society
-                        as well. <br>
-                        The real goal of education is full flowering of young minds by making them experience the
-                        significance of love, fellowship, freedom, justice and harmony. <br>
-                        ​Every child is unique, with unimaginable possibilities we have to make an effort to go beyond
-                        schooling to learning and take on the challenge of preparing every child to play different roles
-                        in his/her life. <br>
-                        I believe in Interactive teaching and in those methods and measures which can motivate children
-                        to adopt different subject aspects with their day to-day life in order to inculcate Application
-                        and Advanced attitude among the. Our real success and happiness is to make good human beings
-                        with love and care so that their learning becomes a “lifetime joy” for them.<br><br>
+    <!-- Librarian Section starts -->
+    <p>{{homecontent.image}}</p>
 
-                        Dreams followed with total commitment and passion will lead to milestone in days and years to
-                        come.
-                    </p>
-                    <span class="patron">Best Wishes,<br>Mrs. Sandhya Pandey</span>
+    <section class="about_lib image-text-section " id="about_lib">
+        <div class="container">
+            <div class='max-width'>
+                <h2 class='title '>Our Patron</h2>
+                <div class="row ">
+                    <div class="col-md-6">
+                        <div class="card" style="width: 13rem;">
+                            <img src="{% static 'uploads/librarian/' %}{{aboutPatron.image}}" class="image_ab"
+                                alt="principal">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="width: 30rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{aboutPatron.title}}</h5>
+                                <p class="card-text">
+                                    {{aboutPatron.text}}
+                                </p>
+                                <span class="patron">Best Wishes,</span>
+                            </div>
+                        </div>
+                       
+
+
+                        <!-- Edit Our Patron Modal -->
+                        
+                    </div>
+
                 </div>
-                <div class='max-width'>
-                    <h2 class='title lib-title'>About The Librarian</h2>
-                    <div class='about-content1'>
-                        <div class='column left'>
-                            <img src="{% static 'Image/Img2.jpg' %}" alt='' />
+
+            </div>
+
+        </div>
+        
+
+        <div class="container">
+            <div class='max-width'>
+                <h2 class='title lib-title'>The Librarian</h2>
+                <div class="row ">
+                    <div class="col-md-6">
+                        <div class="card" style="width: 13rem;">
+                            <img src="{% static 'uploads/librarian/' %}{{aboutlibrarian.image}}" class="image_ab"
+                                alt="librarian">
                         </div>
-                        <div class='column right'>
-                            <div class='text'></div>
-                            <p>Greetings everyone, My name is Kuldeep Sahai, DAV Public Schools, Khadia Librarian</p>
-                            <span class="patron">Best Wishes,<br>Mr. Kuldeep Sahai</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="width: 25rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{aboutlibrarian.title}}</h5>
+                                <p class="card-text">{{aboutlibrarian.text}}
+
+                                </p>
+                                <span class="patron">Best Wishes,</span>
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
+        </div>
+
     </section>
 
-
+    {% comment %} #Books Section Started {% endcomment %}
     <section class='books' id='books'>
         <div class='max-width'>
             <h2 class='title'>BOOKS</h2>
-            <div></div>
-            <div class="column left">
+           
+            <div>
                 <marquee behavior="scroll" direction="left">
-                    <img src="{% static 'Image/book1.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book2.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book3.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book4.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book5.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book6.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book7.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    {% for content in booksNewArrival %}
+                    <p>{{content.0}}</p>
+                    <img src="{% static 'uploads/books/new_arrival' %}{{ content.0 }}" class="card-img-top" alt="bookimage">
+                    
+                    {% endfor %}
                 </marquee>
-            </div>
-            <div class="column left top-picks">
+            </div>  
+            <h2 class="title top-picks"></h2>
+            
+            <div>
                 <marquee behavior="scroll" direction="right">
-                    <img src="{% static 'Image/book1.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book2.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book3.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book4.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book5.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book6.jpg' %}" alt="Book1" style="margin-right: 60px;">
-                    <img src="{% static 'Image/book7.jpg' %}" alt="Book1" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book1.jpg' %}" alt="Book1" height="284px" width="177px" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book2.jpg' %}" alt="Book1" height="284px" width="177px" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book3.jpg' %}" alt="Book1" height="284px" width="177px" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book4.jpg' %}" alt="Book1" height="284px" width="177px" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book5.jpg' %}" alt="Book1" height="284px" width="177px" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book6.jpg' %}" alt="Book1" height="284px" width="177px" style="margin-right: 60px;">
+                    <img src="{% static 'Image/book7.jpg' %}" alt="Book1" height="284px" width="177px" style="margin-right: 60px;">
                 </marquee>
             </div>
         </div>

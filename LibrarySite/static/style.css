@@ -331,10 +331,13 @@ section .title::after{
 }
 
 .about_lib .max-width .about-content .right .text{
-  font-size: 16px;
+  font-size:16px;
   font-weight: normal;
   margin-bottom: 10px;
   
+}
+.card-text{
+  font-size:13px;
 }
 /* .about_lib .about-content1 .right .text span{
   color: crimson;
@@ -351,8 +354,13 @@ section .title::after{
 .patron {
   color:crimson;
   margin-bottom: 15px;
-} 
-
+  font-size:13px;
+}
+.image_ab{
+  border-radius: 10px;
+  height:400px;
+  width:300px;
+}
 /* .about_lib .about-content1 .right a{
   display: inline-block;
   background: crimson;
@@ -387,10 +395,14 @@ section .title::after{
 }
 
 .top-picks {
-  margin-top: 50px;
+  margin-top: 40px;
   
 }
 
+.title.top-picks::after {
+  background: #111;
+  content: "Top Picks"; 
+}
 
 .books .slider {
   position: relative;
