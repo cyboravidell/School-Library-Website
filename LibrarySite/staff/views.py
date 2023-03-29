@@ -18,8 +18,8 @@ def staff(request):
 
     bna = list()
     for i in booksNewArrival:
-        abt.append([i.image,i.position])
-    abt.sort(key=lambda x: x[1])
+        bna.append([i.image,i.position])
+    bna.sort(key=lambda x: x[1])
 
     
     print(list(aboutCorousel))
