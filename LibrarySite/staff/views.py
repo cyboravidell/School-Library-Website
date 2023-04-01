@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
-from .models import Home,AboutCorousel,AboutText,AboutLibrarian,BooksNewArrival
+from .models import Home,AboutCorousel,AboutText,AboutLibrarian,BooksNewArrival,BooksTopPicks
 # Create your views here.
 
 def staff(request):
+    
     homecontent = Home.objects.all()
     aboutCorousel = AboutCorousel.objects.all()
     aboutPatron = AboutLibrarian.objects.get(Sno = 1)
     aboutlibrarian = AboutLibrarian.objects.get(Sno = 2)
     booksNewArrival = BooksNewArrival.objects.all()
+    booksTopPicks = BooksTopPicks.objects.all()
     
     abt = list()
     for i in aboutCorousel:
@@ -21,10 +23,15 @@ def staff(request):
         bna.append([i.image,i.position])
     bna.sort(key=lambda x: x[1])
 
+    btp = list()
+    for i in booksTopPicks:
+        btp.append([i.image,i.position])
+    btp.sort(key=lambda x: x[1])
+
     
     print(list(aboutCorousel))
     context = {'homecontent' : homecontent,
-               'aboutCorousel':abt, 'aboutPatron':aboutPatron, 'aboutlibrarian':aboutlibrarian, 'booksNewArrival': bna}
+               'aboutCorousel':abt, 'aboutPatron':aboutPatron, 'aboutlibrarian':aboutlibrarian, 'booksNewArrival': bna, 'booksTopPicks': btp}
     
     print(homecontent)
     return render(request, "staff.html", context)
@@ -229,6 +236,19 @@ def editNewArrivalBooks(request):
     else:
         return render(request, 'staff.html')
     
+def deleteNewArrivalBooks(request):
+    if request.method == 'POST':
+
+        image = request.POST['lastimage']
+        book_pos = request.POST['book_pos']
+
+        query = get_object_or_404(BooksNewArrival, position = book_pos, image = image).delete()
+        messages.success(request, "Selected Image deleted Successfully from New Arrival")
+        return redirect('staff')
+
+    else:
+        return render(request, 'staff.html')
+    
 def addImageNewArrivalBooks(request):
     if request.method == 'POST':
 
@@ -245,3 +265,67 @@ def addImageNewArrivalBooks(request):
 
     else:
         return render(request, 'staff.html')
+    
+
+def editTopPicksBooks(request):
+    if request.method == "POST":
+        uploaded_file = request.FILES.get('image')
+        lpos=request.POST['lpos']
+        lastimage=request.POST['lastimage']
+        npos=request.POST['npos']
+        if uploaded_file is not None:
+            # try:
+            about = get_object_or_404(BooksTopPicks,position=lpos,image = lastimage)
+            about.image=uploaded_file.name
+            about.position=npos
+            about.save()
+            print("edited")
+            fs = FileSystemStorage(location='static/uploads/books/top_picks')
+            fs.save(uploaded_file.name, uploaded_file)
+            messages.success(request, "Selected Book Modified Successfully")
+        # except:
+            # print("exception occured")
+            # messages.error(request, "There are multiples data found with same Image position please check that and try again")
+            return redirect('staff')
+
+        else:
+            messages.error(request, "Invalid file type choosen, Please try again with correct file type")
+        return redirect('staff')
+    else:
+        return render(request, 'staff.html')
+ 
+
+     
+def deleteTopPicksBooks(request):
+    if request.method == 'POST':
+
+        image = request.POST['lastimage']
+        book_pos = request.POST['book_pos']
+
+        query = get_object_or_404(BooksTopPicks, position = book_pos, image = image).delete()
+        messages.success(request, "Selected Image deleted Successfully from New Arrival")
+        return redirect('staff')
+
+    else:
+        return render(request, 'staff.html')
+ 
+
+
+    
+def addImageTopPicksBooks(request):
+    if request.method == 'POST':
+
+        npos = request.POST['npos']
+        uploaded_file = request.FILES.get('image')
+        
+        corousel = BooksTopPicks(image = uploaded_file.name,position = npos)
+        corousel.save()
+
+        fs = FileSystemStorage(location='static/uploads/books/top_picks')
+        fs.save(uploaded_file.name, uploaded_file)
+        messages.success(request, "New Image added Successfully to the Corousel")
+        return redirect('staff')
+
+    else:
+        return render(request, 'staff.html')
+ 

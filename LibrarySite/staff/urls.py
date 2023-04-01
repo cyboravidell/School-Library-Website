@@ -12,7 +12,13 @@ urlpatterns = [
     path('/addNewImageCourosel', views.about_addNewImageCorousel, name="addNewImageCourosel"),
     path('/editOurPatron', views.editOurPatron, name="editOurPatron"),
     path('/editTheLibrarian', views.editTheLibrarian, name="editTheLibrarian"),
+
     path('/editNewArrivalBooks', views.editNewArrivalBooks, name="editNewArrivalBooks"),
+    path('/deleteNewArrivalBooks', views.deleteNewArrivalBooks, name="deleteNewArrivalBooks"),
     path('/addImageNewArrivalBooks', views.addImageNewArrivalBooks, name="addImageNewArrivalBooks"),
+
+    path('/editTopPicksBooks', views.editTopPicksBooks, name="editTopPickBooks"),
+    path('/deleteTopPicksBooks', views.deleteTopPicksBooks, name="deleteTopPicksBooks"),
+    path('/addImageTopPicksBooks', views.addImageTopPicksBooks, name="addImageTopPicksBooks"),
     
 ]

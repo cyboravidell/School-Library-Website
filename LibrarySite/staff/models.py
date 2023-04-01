@@ -31,3 +31,7 @@ class AboutLibrarian(models.Model):
 class BooksNewArrival(models.Model):
     image = models.CharField(max_length=100)
     position = models.IntegerField()
+
+class BooksTopPicks(models.Model):
+    image = models.CharField(max_length=100)
+    position = models.IntegerField()

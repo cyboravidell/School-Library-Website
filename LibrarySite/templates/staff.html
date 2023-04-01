@@ -494,7 +494,7 @@
                     
                     <div class="col">
                         <div class="card text-dark">
-                            <img src="{% static 'uploads/books/new_arrival' %}{{ book6.jpg }}" class="card-img-top" alt="c image">
+                            <img src="{% static 'uploads/books/new_arrival/' %}{{content.0}}" class="card-img-top" alt="c image">
                             <h5 class="card-title">Book Position : {{content.1}} {{content.0}}</h5> 
                             <div class="d-flex justify-content-between align-items-center">
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal"
@@ -504,7 +504,7 @@
                                 <form action="staff/deleteNewArrivalBooks" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="lastimage" value="{{ content.0 }}">
-                                    <input type="hidden" name="corousel_id" value="{{ content.1 }}">
+                                    <input type="hidden" name="book_pos" value="{{ content.1 }}">
                                     <button type="submit" class="btn btn-danger float-end">Delete</button>
                                 </form>
 
@@ -626,23 +626,142 @@
             </div>
             <h2 class="title top-picks"></h2>
             <div></div>
-            <div class="column left ">
-                <marquee behavior="scroll" direction="right">
-                    <img src="{% static 'Image/book1.jpg' %}" alt="Book1" height="284px" width="177px"
-                        style="margin-right: 60px;">
-                    <img src="{% static 'Image/book2.jpg' %}" alt="Book1" height="284px" width="177px"
-                        style="margin-right: 60px;">
-                    <img src="{% static 'Image/book3.jpg' %}" alt="Book1" height="284px" width="177px"
-                        style="margin-right: 60px;">
-                    <img src="{% static 'Image/book4.jpg' %}" alt="Book1" height="284px" width="177px"
-                        style="margin-right: 60px;">
-                    <img src="{% static 'Image/book5.jpg' %}" alt="Book1" height="284px" width="177px"
-                        style="margin-right: 60px;">
-                    <img src="{% static 'Image/book6.jpg' %}" alt="Book1" height="284px" width="177px"
-                        style="margin-right: 60px;">
-                    <img src="{% static 'Image/book7.jpg' %}" alt="Book1" height="284px" width="177px"
-                        style="margin-right: 60px;">
-                </marquee>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+                    
+                    {% for content in booksTopPicks %}
+                    
+                    <div class="col">
+                        <div class="card text-dark">
+                            <img src="{% static 'uploads/books/top_picks/' %}{{content.0}}" class="card-img-top" alt="c image">
+                            <h5 class="card-title">Book Position : {{content.1}} {{content.0}}</h5> 
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#books-top-Picks{{content.1}}">Edit</a>
+
+                                <!-- delete book -->
+                                <form action="staff/deleteTopPicksBooks" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="lastimage" value="{{ content.0 }}">
+                                    <input type="hidden" name="book_pos" value="{{ content.1 }}">
+                                    <button type="submit" class="btn btn-danger float-end">Delete</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Top picks book Modal -->
+                    <div class="modal fade" id="books-top-Picks{{content.1}}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Edit Top Picks Books
+                                        Here</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="staff/editTopPicksBooks"
+                                        enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-image"
+                                                class="mr-2 col-form-label text-dark">Choose New Image</label>
+                                            <input type="hidden" name="lastimage" value="{{ content.0 }}">
+
+                                            <input type="file" class="form-control mr-2" id="about-corousel-image"
+                                                name="image" value="" placeholder="Choose Path" required>
+
+                                        </div>
+                                        <div class="form-inline mb-3">
+
+                                            <input type="hidden" class="form-control mr-2"
+                                                id="about-corousel-last-position" name="lpos" placeholder=""
+                                                value="{{content.1}}">
+                                        </div>
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-last-position"
+                                                class="mr-2 col-form-label text-dark">Last Position:</label>
+                                            <input type="text" class="form-control mr-2"
+                                                id="about-corousel-last-position" name="" placeholder=""
+                                                value="{{content.1}}" disabled>
+                                        </div>
+
+                                        <div class="form-inline mb-3">
+                                            <label for="about-corousel-new-position"
+                                                class="mr-2 col-form-label text-dark">New Position:</label>
+
+                                            <input type="text" class="form-control mr-2"
+                                                id="about-corousel-new-position" name="npos" placeholder="" value=""
+                                                required>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save Changes</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <a href="#" class="btn btn-outline-secondary float-end mt-2  mx-2" data-bs-toggle="modal"
+                    data-bs-target="#books-add-new-image-top-picks-Modal">Add Image to Top Picks</a>
+
+                <div class="modal fade" id="books-add-new-image-top-picks-Modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Add Image to Top Picks Here
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="staff/addImageTopPicksBooks" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-inline mb-3">
+                                        <label for="about-corousel-image" class="mr-2 col-form-label text-dark">New
+                                            Image</label>
+
+
+                                        <input type="file" class="form-control mr-2" id="about-corousel-image"
+                                            name="image" placeholder="Choose Path" required>
+
+                                    </div>
+
+
+                                    <div class="form-inline mb-3">
+                                        <label for="about-corousel-new-position"
+                                            class="mr-2 col-form-label text-dark">New
+                                            Position:</label>
+
+                                        <input type="text" class="form-control mr-2" id="about-corousel-new-position"
+                                            name="npos" placeholder="" value="" required>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">Save Changes</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
