@@ -719,6 +719,7 @@ footer span a:hover{
   .right form .error-box{
      width: 150px;
   }
+  
   .scroll-up-btn{
     right: 15px;
     bottom: 15px;
@@ -727,6 +728,12 @@ footer span a:hover{
     font-size: 23px;
     line-height: 38px;
 }
+}
+
+.scrollable {
+  height: 100px;
+  overflow: auto;
+  background: #000;
 }
 
 /* .App {

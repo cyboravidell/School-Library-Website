@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 # Create your models here.
 class Contact(models.Model):
@@ -6,7 +7,7 @@ class Contact(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=150)
     subject = models.CharField(max_length=140)
-    Timestamp = models.CharField(max_length=100)
+    Timestamp = models.DateTimeField(default=now)
     message = models.TextField()
 
 

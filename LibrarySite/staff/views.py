@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from .models import Home,AboutCorousel,AboutText,AboutLibrarian,BooksNewArrival,BooksTopPicks
+from contact.models import Contact
 # Create your views here.
 
 def staff(request):
@@ -12,6 +13,7 @@ def staff(request):
     aboutlibrarian = AboutLibrarian.objects.get(Sno = 2)
     booksNewArrival = BooksNewArrival.objects.all()
     booksTopPicks = BooksTopPicks.objects.all()
+    contacts = Contact.objects.all()
     
     abt = list()
     for i in aboutCorousel:
@@ -30,7 +32,7 @@ def staff(request):
 
     
     print(list(aboutCorousel))
-    context = {'homecontent' : homecontent,
+    context = {'homecontent' : homecontent, 'contacts': contacts,
                'aboutCorousel':abt, 'aboutPatron':aboutPatron, 'aboutlibrarian':aboutlibrarian, 'booksNewArrival': bna, 'booksTopPicks': btp}
     
     print(homecontent)
@@ -328,4 +330,15 @@ def addImageTopPicksBooks(request):
 
     else:
         return render(request, 'staff.html')
+    
+
+def deleteContactMessage(request):
+    if request.method == 'POST':
+        sno = request.POST['sno']
+        query = get_object_or_404(Contact, Sno = sno).delete()
+        messages.success(request, "Selected Message deleted Successfully from Contact Message")
+        return redirect('staff')
+
+    else:
+        return render('staff.html')
  

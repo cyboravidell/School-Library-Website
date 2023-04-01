@@ -20,5 +20,8 @@ urlpatterns = [
     path('/editTopPicksBooks', views.editTopPicksBooks, name="editTopPickBooks"),
     path('/deleteTopPicksBooks', views.deleteTopPicksBooks, name="deleteTopPicksBooks"),
     path('/addImageTopPicksBooks', views.addImageTopPicksBooks, name="addImageTopPicksBooks"),
+
+    path('/deleteContactMessage', views.deleteContactMessage, name="deleteContactMessage"),
+
     
 ]
