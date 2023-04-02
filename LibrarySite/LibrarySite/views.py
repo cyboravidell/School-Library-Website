@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival
+from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival, BooksTopPicks
 
 
 def home(request):
@@ -13,6 +13,7 @@ def home(request):
     aboutPatron = AboutLibrarian.objects.get(Sno = 1)
     aboutlibrarian = AboutLibrarian.objects.get(Sno = 2)
     booksNewArrival = BooksNewArrival.objects.all()
+    booksTopPicks = BooksTopPicks.objects.all()
 
 
     abt = list()
@@ -24,6 +25,11 @@ def home(request):
     for i in booksNewArrival:
         bna.append([i.image,i.position])
     bna.sort(key=lambda x: x[1])
+
+    btp = list()
+    for i in booksTopPicks:
+        btp.append([i.image,i.position])
+    btp.sort(key=lambda x: x[1])
     
     print(list(aboutCorousel))
     context = {'homecontent' : homecontent,
@@ -31,7 +37,7 @@ def home(request):
                'aboutText': aboutText.text, 
                'aboutPatron':aboutPatron, 
                'aboutlibrarian':aboutlibrarian, 
-               'booksNewArrival': bna}
+               'booksNewArrival': bna, 'booksTopPicks': btp}
     
     return render(request, "home.html", context)
 
