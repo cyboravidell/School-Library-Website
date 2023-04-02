@@ -4,6 +4,13 @@ from django.contrib import messages
 from .models import Home,AboutCorousel,AboutText,AboutLibrarian,BooksNewArrival,BooksTopPicks
 from contact.models import Contact
 # Create your views here.
+from pathlib import Path
+import os
+def delete_file(file_dir):
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    path = os.path.join(BASE_DIR,file_dir)
+    os.remove(path)
+
 
 def staff(request):
     
@@ -44,20 +51,31 @@ def edit_home(request):
         line1 = request.POST['line1']
         line2 = request.POST['line2']
         line3 = request.POST['line3']
-        print(uploaded_file)
+        home = get_object_or_404(Home,Sno=1)
         if uploaded_file is not None:
             fs = FileSystemStorage(location='static/uploads/home')
             fs.save(uploaded_file.name, uploaded_file)
-            home = get_object_or_404(Home,Sno=1)
+            old_image = home.image
             home.image = uploaded_file.name
-            home.line_1 = line1
+            home.save()
+            delete_file(f'static\\uploads\\home\\{old_image}')  
+           
+        if line1:
+            home.line_1= line1
+            home.save()
+        if line2:
             home.line_2 = line2
+            home.save()
+        if line3:   
             home.line_3 = line3
             home.save()
-            messages.success(request, "Home Section Editted Successfully")
         else:
-            messages.error(request, "Invalid file type choosen, Please try again with correct file type")
+            messages.error(request, "Invalid details Provided Please check and try again")
+            return redirect('staff')
+        
+        messages.success(request, "Home Section Editted Successfully")
         return redirect('staff')
+        
     else:
         return render(request, 'staff.html')
         
