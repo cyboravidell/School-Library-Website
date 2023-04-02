@@ -139,33 +139,58 @@ def editOurPatron(request):
 
     if request.method == 'POST':
 
+        title = request.POST['title']
         ntext = request.POST['ntext']
         uploaded_file = request.FILES.get('image')
         patron = AboutLibrarian.objects.get(Sno = 1)
 
-        if uploaded_file and ntext is not True:
+        if uploaded_file is not None:
+            
             fs = FileSystemStorage(location='static/uploads/librarian')
             fs.save(uploaded_file.name, uploaded_file)
 
             patron.image = uploaded_file.name
-            patron.text = ntext
             patron.save()
 
-            messages.success(request, "New Image and content added Successfully to our patron")
+        if ntext:
+            patron.text=ntext
+            patron.save()
+
+        if title:
+            patron.title=title
+            patron.save()
+
+        else:
+            messages.error(request, "You do not choose anything.")
+
+        # if uploaded_file !=None and ntext != False and title!= False :
+           
+        #     fs = FileSystemStorage(location='static/uploads/librarian')
+        #     fs.save(uploaded_file.name, uploaded_file)
+
+        #     patron.image = uploaded_file.name
+        #     patron.text = ntext
+        #     patron.title = title
+        #     patron.save()
+
+        #     messages.success(request, "New Image and content added Successfully to our patron")
             
 
-        elif ntext is not True:
-            fs = FileSystemStorage(location='static/uploads/librarian')
-            fs.save(uploaded_file.name, uploaded_file)
+        # elif ntext == False and title == False and uploaded_file is not None:
+        #     fs = FileSystemStorage(location='static/uploads/librarian')
+        #     fs.save(uploaded_file.name, uploaded_file)
 
-            patron.image = uploaded_file.name
-            patron.save()
+        #     patron.image = uploaded_file.name
+        #     patron.save()
 
-            messages.success(request, "New Image  added Successfully to our patron")
-        else:
-            patron.text = ntext
-            patron.save()
-            messages.success(request, "New content added Successfully to our patron")
+        #     messages.success(request, "New Image  added Successfully to our patron")
+
+        # elif  ntext == True and title == False and uploaded_file == False:
+
+        # else:
+        #     patron.text = ntext
+        #     patron.save()
+        #     messages.success(request, "New content added Successfully to our patron")
 
         return redirect('staff')
     
@@ -176,34 +201,54 @@ def editOurPatron(request):
 def editTheLibrarian(request):
 
     if request.method == 'POST':
-
+        title = request.POST['title']
         ntext = request.POST['ntext']
         uploaded_file = request.FILES.get('image')
         patron = AboutLibrarian.objects.get(Sno = 2)
 
-        if uploaded_file != None and ntext:
+
+        if uploaded_file is not None:
+            
             fs = FileSystemStorage(location='static/uploads/librarian')
             fs.save(uploaded_file.name, uploaded_file)
 
             patron.image = uploaded_file.name
-            patron.text = ntext
             patron.save()
 
-            messages.success(request, "New Image and content added Successfully to our The Librarian")
+        if ntext:
+            patron.text=ntext
+            patron.save()
+
+        if title:
+            patron.title=title
+            patron.save()
+
+        else:
+            messages.error(request, "You do not choose anything.")
+
+        # if uploaded_file != None and ntext:
+        #     fs = FileSystemStorage(location='static/uploads/librarian')
+        #     fs.save(uploaded_file.name, uploaded_file)
+
+        #     patron.image = uploaded_file.name
+        #     patron.text = ntext
+        #     patron.save()
+
+        #     messages.success(request, "New Image and content added Successfully to our The Librarian")
             
 
-        elif ntext =="":
-            fs = FileSystemStorage(location='static/uploads/librarian')
-            fs.save(uploaded_file.name, uploaded_file)
+        # elif ntext =="":
+        #     fs = FileSystemStorage(location='static/uploads/librarian')
+        #     fs.save(uploaded_file.name, uploaded_file)
 
-            patron.image = uploaded_file.name
-            patron.save()
+        #     patron.image = uploaded_file.name
+        #     patron.save()
 
-            messages.success(request, "New Image  added Successfully to The Librarian")
-        else:
-            patron.text = ntext 
-            patron.save()
-            messages.success(request, "New content added Successfully to The Librarian")
+        #     messages.success(request, "New Image  added Successfully to The Librarian")
+        # else:
+        #     patron.text = ntext 
+        #     patron.save()
+        #     messages.success(request, "New content added Successfully to The Librarian")
 
         return redirect('staff')
     
