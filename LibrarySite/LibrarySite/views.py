@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival, BooksTopPicks
+# from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival, BooksTopPicks
 
 
 def home(request):
@@ -15,6 +16,15 @@ def home(request):
     booksNewArrival = BooksNewArrival.objects.all()
     booksTopPicks = BooksTopPicks.objects.all()
 
+    aboutText = aboutText.text
+    aboutText=aboutText.split("\n")
+    
+
+    aboutPatronText=aboutPatron.text
+    aboutPatronText=aboutPatronText.split("\n") 
+
+    aboutlibrarianText=aboutlibrarian.text
+    aboutlibrarianText=aboutlibrarianText.split("\n")
 
     abt = list()
     for i in aboutCorousel:
@@ -34,10 +44,13 @@ def home(request):
     print(list(aboutCorousel))
     context = {'homecontent' : homecontent,
                'aboutCorousel':abt,
-               'aboutText': aboutText.text, 
+               'aboutText': aboutText, 
                'aboutPatron':aboutPatron, 
+               'aboutPatronText':aboutPatronText, 
                'aboutlibrarian':aboutlibrarian, 
-               'booksNewArrival': bna, 'booksTopPicks': btp}
+               'aboutlibrarianText':aboutlibrarianText, 
+               'booksNewArrival': bna,
+               'booksTopPicks':btp}
     
     return render(request, "home.html", context)
 
