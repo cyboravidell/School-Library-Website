@@ -22,6 +22,8 @@ urlpatterns = [
     path('/addImageTopPicksBooks', views.addImageTopPicksBooks, name="addImageTopPicksBooks"),
 
     path('/deleteContactMessage', views.deleteContactMessage, name="deleteContactMessage"),
+    path('/editContactDetails', views.editContactDetails, name="editContactDetails"),
+
 
     
 ]

@@ -36,7 +36,13 @@ $(document).ready(function(){
         $('.navbar .menu').toggleClass("active");
         $('.menu-btn i').toggleClass("active");
     });
-
+    var myVar = document.getElementById("myVar").value;
+    var typed = new Typed(".typing", {
+        strings: [myVar],
+        typeSpeed: 100,
+        backSpeed: 60,
+        loop: true
+    });
 })
 
 

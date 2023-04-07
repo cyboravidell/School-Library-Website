@@ -35,3 +35,9 @@ class BooksNewArrival(models.Model):
 class BooksTopPicks(models.Model):
     image = models.CharField(max_length=100)
     position = models.IntegerField()
+
+class ContactDetails(models.Model):
+    Sno = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    address = models.TextField()
+    email = models.CharField(max_length=100)

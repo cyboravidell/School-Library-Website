@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival, BooksTopPicks
+from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival, BooksTopPicks, ContactDetails
 # from staff.models import Home, AboutCorousel, AboutText, AboutLibrarian, BooksNewArrival, BooksTopPicks
 
 
@@ -15,6 +15,7 @@ def home(request):
     aboutlibrarian = AboutLibrarian.objects.get(Sno = 2)
     booksNewArrival = BooksNewArrival.objects.all()
     booksTopPicks = BooksTopPicks.objects.all()
+    contactDetails = ContactDetails.objects.get(Sno = 1)
 
     aboutText = aboutText.text
     aboutText=aboutText.split("\n")
@@ -50,7 +51,8 @@ def home(request):
                'aboutlibrarian':aboutlibrarian, 
                'aboutlibrarianText':aboutlibrarianText, 
                'booksNewArrival': bna,
-               'booksTopPicks':btp}
+               'booksTopPicks':btp,
+               'contactDetails':contactDetails}
     
     return render(request, "home.html", context)
 

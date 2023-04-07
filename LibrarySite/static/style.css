@@ -87,7 +87,7 @@ section .title::after{
 
 
 .navbar{
-  position: fixed;
+  /* position: fixed; */
   background-color: crimson;
   width: 100%;
   z-index: 999;
@@ -177,6 +177,9 @@ section .title::after{
     filter: brightness(90%);
 }   
 
+.message{
+  position: fixed;
+}
 .home{
   display: flex;
   position: relative;
@@ -333,8 +336,8 @@ section .title::after{
 }
 .image_ab{
   border-radius: 10px;
-  height:400px;
-  width:300px;
+  height:500px;
+  width:500px;
 }
 
 .l1{
@@ -363,6 +366,8 @@ section .title::after{
 
 
 
+
+
 .title.top-picks::after {
   background: #111;
   content: "Top Picks"; 
@@ -374,7 +379,16 @@ section .title::after{
   margin-top: 40px;
   
 }
+.card-img-container {
+  height: 300px; /* or any other fixed height you prefer */
+  overflow: hidden;
+}
 
+.card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 /* Contact Section CSS */
 
 .contact .title::after{
@@ -395,7 +409,7 @@ section .title::after{
   text-align: justify;
 }
 
-.contact .contact-content .left .icons{
+/* .contact .contact-content .left .icons{
   margin: 10px 0;
 }
 
@@ -409,10 +423,8 @@ section .title::after{
   margin-left: 30px;
 }
 
-.contact .contact-content .row i{
-  font-size: 25px;
-  color: crimson;
-}
+
+*/
 
 .contact .contact-content .info .head{
   font-weight: 500;
@@ -420,6 +432,11 @@ section .title::after{
 
 .contact .contact-content .info .sub-title{
   color: #333;
+} 
+
+.contact .contact-content .row i{
+  font-size: 25px;
+  color: crimson;
 }
 .contact .right form .fields{
   display: flex;

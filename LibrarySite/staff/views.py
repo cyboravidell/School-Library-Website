@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404,HttpResponsePermanentRedirect
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
-from .models import Home,AboutCorousel,AboutText,AboutLibrarian,BooksNewArrival,BooksTopPicks
+from .models import Home,AboutCorousel,AboutText,AboutLibrarian,BooksNewArrival,BooksTopPicks,ContactDetails
 from contact.models import Contact
 # Create your views here.
 from pathlib import Path
@@ -21,6 +21,17 @@ def staff(request):
     booksNewArrival = BooksNewArrival.objects.all()
     booksTopPicks = BooksTopPicks.objects.all()
     contacts = Contact.objects.all()
+    contactDetails = ContactDetails.objects.get(Sno = 1)
+    aboutText = AboutText.objects.get(Sno = 1)
+    aboutText = aboutText.text
+    aboutText=aboutText.split("\n")
+
+
+    aboutPatronText=aboutPatron.text
+    aboutPatronText=aboutPatronText.split("\n") 
+
+    aboutlibrarianText=aboutlibrarian.text
+    aboutlibrarianText=aboutlibrarianText.split("\n")
     
     abt = list()
     for i in aboutCorousel:
@@ -39,8 +50,9 @@ def staff(request):
 
     
     print(list(aboutCorousel))
-    context = {'homecontent' : homecontent, 'contacts': contacts,
-               'aboutCorousel':abt, 'aboutPatron':aboutPatron, 'aboutlibrarian':aboutlibrarian, 'booksNewArrival': bna, 'booksTopPicks': btp}
+    context = {'homecontent' : homecontent, 'contacts': contacts,'aboutText': aboutText,'aboutPatronText': aboutPatronText, 'aboutlibrarianText': aboutlibrarianText,
+               'aboutCorousel':abt, 'aboutPatron':aboutPatron, 'aboutlibrarian':aboutlibrarian, 'booksNewArrival': bna, 'booksTopPicks': btp,
+               'contactDetails':contactDetails}
     
     print(homecontent)
     return render(request, "staff.html", context)
@@ -69,7 +81,7 @@ def edit_home(request):
         if line3:   
             home.line_3 = line3
             home.save()
-        else:
+        if line1 == False and line2==False and line3==False and uploaded_file is None:
             messages.error(request, "Invalid details Provided Please check and try again")
             return redirect('staff')
         
@@ -86,24 +98,30 @@ def edit_aboutCorousel(request):
         lpos=request.POST['lpos']
         lastimage=request.POST['lastimage']
         npos=request.POST['npos']
+
+        about = get_object_or_404(AboutCorousel,position=lpos,image = lastimage)
         if uploaded_file is not None:
             fs = FileSystemStorage(location='static/uploads/about')
             fs.save(uploaded_file.name, uploaded_file)
-            try:
-                about = get_object_or_404(AboutCorousel,position=lpos,image = lastimage)
-                about.image=uploaded_file.name
-                about.position=npos
-                about.save()
-                print("ediited")
-                messages.success(request, "Selected Corousel Modified Successfully")
-            except:
-                print("exception occured")
-                messages.error(request, "There are multiples data found with same Image position please check that and try again")
-            return redirect('staff')
+            old_image = about.image
+            about.image=uploaded_file.name
+            about.save()
+            delete_file(f'static\\uploads\\about\\{old_image}') 
 
-        else:
-            messages.error(request, "Invalid file type choosen, Please try again with correct file type")
+        if npos:
+            about.position=npos
+            about.save()
+
+        if uploaded_file is None and npos is False:
+            messages.error(request, "You didnot choose anything, Please check and try again")
+            return redirect('staff')
+        
+        
+        
+        messages.success(request, "Selected data is seccessfully modified")
+  
         return redirect('staff')
+        
     else:
         return render(request, 'staff.html')
 
@@ -115,6 +133,7 @@ def delete_about_corousel(request):
         lastimage=request.POST['lastimage']
         print(lastimage,corousel_id)
         corousel = AboutCorousel.objects.get(position=corousel_id,image = lastimage).delete()
+        delete_file(f'static\\uploads\\about\\{lastimage}')
         messages.success(request, "Selected Corousel Deleted Successfully")
         return redirect('staff')    
 
@@ -166,9 +185,11 @@ def editOurPatron(request):
             
             fs = FileSystemStorage(location='static/uploads/librarian')
             fs.save(uploaded_file.name, uploaded_file)
-
+            lastimage = patron.image
             patron.image = uploaded_file.name
             patron.save()
+
+            delete_file(f'static\\uploads\\librarian\\{lastimage}')
 
         if ntext:
             patron.text=ntext
@@ -178,38 +199,11 @@ def editOurPatron(request):
             patron.title=title
             patron.save()
 
-        else:
-            messages.error(request, "You do not choose anything.")
-
-        # if uploaded_file !=None and ntext != False and title!= False :
-           
-        #     fs = FileSystemStorage(location='static/uploads/librarian')
-        #     fs.save(uploaded_file.name, uploaded_file)
-
-        #     patron.image = uploaded_file.name
-        #     patron.text = ntext
-        #     patron.title = title
-        #     patron.save()
-
-        #     messages.success(request, "New Image and content added Successfully to our patron")
-            
-
-        # elif ntext == False and title == False and uploaded_file is not None:
-        #     fs = FileSystemStorage(location='static/uploads/librarian')
-        #     fs.save(uploaded_file.name, uploaded_file)
-
-        #     patron.image = uploaded_file.name
-        #     patron.save()
-
-        #     messages.success(request, "New Image  added Successfully to our patron")
-
-        # elif  ntext == True and title == False and uploaded_file == False:
-
-        # else:
-        #     patron.text = ntext
-        #     patron.save()
-        #     messages.success(request, "New content added Successfully to our patron")
-
+        if uploaded_file is None and ntext is False and title is False:
+            messages.error(request, "You do not choose anything.  Please check and try again")
+            return redirect('staff')
+        
+        messages.success(request, "Your changes made Successfully.")
         return redirect('staff')
     
     else:
@@ -229,9 +223,11 @@ def editTheLibrarian(request):
             
             fs = FileSystemStorage(location='static/uploads/librarian')
             fs.save(uploaded_file.name, uploaded_file)
-
+            lastimage = patron.image
             patron.image = uploaded_file.name
             patron.save()
+
+            delete_file(f'static\\uploads\\librarian\\{lastimage}')
 
         if ntext:
             patron.text=ntext
@@ -241,33 +237,11 @@ def editTheLibrarian(request):
             patron.title=title
             patron.save()
 
-        else:
-            messages.error(request, "You do not choose anything.")
-
-        # if uploaded_file != None and ntext:
-        #     fs = FileSystemStorage(location='static/uploads/librarian')
-        #     fs.save(uploaded_file.name, uploaded_file)
-
-        #     patron.image = uploaded_file.name
-        #     patron.text = ntext
-        #     patron.save()
-
-        #     messages.success(request, "New Image and content added Successfully to our The Librarian")
-            
-
-        # elif ntext =="":
-        #     fs = FileSystemStorage(location='static/uploads/librarian')
-        #     fs.save(uploaded_file.name, uploaded_file)
-
-        #     patron.image = uploaded_file.name
-        #     patron.save()
-
-        #     messages.success(request, "New Image  added Successfully to The Librarian")
-        # else:
-        #     patron.text = ntext 
-        #     patron.save()
-        #     messages.success(request, "New content added Successfully to The Librarian")
-
+        if uploaded_file is None and ntext is False and title is False:
+            messages.error(request, "You do not choose anything. Please check and try again")
+            return redirect('staff')
+        
+        messages.success(request, "Your changes made Successfully.")
         return redirect('staff')
     
     else:
@@ -280,23 +254,24 @@ def editNewArrivalBooks(request):
         lpos=request.POST['lpos']
         lastimage=request.POST['lastimage']
         npos=request.POST['npos']
+        about = get_object_or_404(BooksNewArrival,position=lpos,image = lastimage)
         if uploaded_file is not None:
             # try:
-            about = get_object_or_404(BooksNewArrival,position=lpos,image = lastimage)
             about.image=uploaded_file.name
-            about.position=npos
             about.save()
+            delete_file(f'static\\uploads\\books\\new_arrival\\{lastimage}')
             print("edited")
             fs = FileSystemStorage(location='static/uploads/books/new_arrival')
             fs.save(uploaded_file.name, uploaded_file)
             messages.success(request, "Selected Book Modified Successfully")
-        # except:
-            # print("exception occured")
-            # messages.error(request, "There are multiples data found with same Image position please check that and try again")
-            return redirect('staff')
+        
+        if npos:
+            about.position = npos
+            about.save()
+        if uploaded_file is None and npos is False:
+            messages.error(request, "You didn't choose anything, Please check and try again later")
 
-        else:
-            messages.error(request, "Invalid file type choosen, Please try again with correct file type")
+        messages.success(request, "Your changes updated successfully")
         return redirect('staff')
     else:
         return render(request, 'staff.html')
@@ -308,6 +283,7 @@ def deleteNewArrivalBooks(request):
         book_pos = request.POST['book_pos']
 
         query = get_object_or_404(BooksNewArrival, position = book_pos, image = image).delete()
+        delete_file(f'static\\uploads\\books\\new_arrival\\{image}')
         messages.success(request, "Selected Image deleted Successfully from New Arrival")
         return redirect('staff')
 
@@ -325,7 +301,7 @@ def addImageNewArrivalBooks(request):
 
         fs = FileSystemStorage(location='static/uploads/books/new_arrival')
         fs.save(uploaded_file.name, uploaded_file)
-        messages.success(request, "New Image added Successfully to the Corousel")
+        messages.success(request, "New Image added Successfully to the New Arrival")
         return redirect('staff')
 
     else:
@@ -338,23 +314,25 @@ def editTopPicksBooks(request):
         lpos=request.POST['lpos']
         lastimage=request.POST['lastimage']
         npos=request.POST['npos']
+        about = get_object_or_404(BooksTopPicks,position=lpos,image = lastimage)
+
         if uploaded_file is not None:
             # try:
-            about = get_object_or_404(BooksTopPicks,position=lpos,image = lastimage)
             about.image=uploaded_file.name
-            about.position=npos
             about.save()
-            print("edited")
+            
+            delete_file(f'static\\uploads\\books\\top_picks\\{lastimage}')
+            
             fs = FileSystemStorage(location='static/uploads/books/top_picks')
             fs.save(uploaded_file.name, uploaded_file)
-            messages.success(request, "Selected Book Modified Successfully")
-        # except:
-            # print("exception occured")
-            # messages.error(request, "There are multiples data found with same Image position please check that and try again")
-            return redirect('staff')
 
-        else:
-            messages.error(request, "Invalid file type choosen, Please try again with correct file type")
+        if npos:
+            about.position = npos
+            about.save()
+        if uploaded_file is None and npos is False:
+            messages.error(request, "You didn't choose anything, Please check and try again later")
+            
+        messages.success(request, "Your changes updated successfully")
         return redirect('staff')
     else:
         return render(request, 'staff.html')
@@ -368,7 +346,8 @@ def deleteTopPicksBooks(request):
         book_pos = request.POST['book_pos']
 
         query = get_object_or_404(BooksTopPicks, position = book_pos, image = image).delete()
-        messages.success(request, "Selected Image deleted Successfully from New Arrival")
+        delete_file(f'static\\uploads\\books\\top_picks\\{image}')
+        messages.success(request, "Selected Image deleted Successfully from Top Picks")
         return redirect('staff')
 
     else:
@@ -399,6 +378,33 @@ def deleteContactMessage(request):
     if request.method == 'POST':
         sno = request.POST['sno']
         query = get_object_or_404(Contact, Sno = sno).delete()
+        messages.success(request, "Selected Message deleted Successfully from Contact Message")
+        return redirect('staff')
+
+    else:
+        return render('staff.html')
+    
+def editContactDetails(request):
+    if request.method == 'POST':
+        
+        query = get_object_or_404(ContactDetails, Sno = 1)
+        name = request.POST['name']
+        address = request.POST['address']
+        email = request.POST['email']
+
+        if name:
+            query.name = name
+            query.save()
+        if address:
+            query.address = address
+            query.save()
+        if email:
+            query.email = email
+            query.save()
+        if name is False and address is False and email is False:
+            messages.error(request, "You did not provide any details, Please check and try again")
+            return redirect('staff')
+        
         messages.success(request, "Selected Message deleted Successfully from Contact Message")
         return redirect('staff')
 
